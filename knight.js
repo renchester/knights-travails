@@ -1,20 +1,72 @@
-const Knight = () => {
-  const visited = [];
-  const moveCounter = 0;
+const PositionNode = (coords) => {
+  const [x, y] = coords;
+  const children = [];
 
-  //  Check if knight is on board
-  const onBoard = (knightX, knightY, boardX = 8, boardY = 8) =>
-    knightX >= 1 && knightX <= boardX && knightY >= 1 && knightY <= boardY;
+  let parent = null;
 
-  const hasVisited = (knightX, knightY) => {
-    visited.forEach((move) => {
-      if (move[0] === knightX && move[1] === knightY) return true;
-    });
-
-    return false;
+  const setParent = (parentValue) => {
+    parent = parentValue;
   };
 
-  const generateMoves = (startX, startY) => {
+  const addChild = (child) => {
+    children.push(child);
+  };
+
+  return {
+    x,
+    y,
+    parent,
+    children,
+    setParent,
+    addChild,
+  };
+};
+
+const Knight = (startPoint) => {
+  if (!onBoard(startPoint)) return 'Invalid board position';
+
+  const rootNode = PositionNode(startPoint);
+  const visited = [startPoint];
+
+  createPathTree();
+
+  const createPathTree = () => {
+    const queue = [rootNode];
+
+    while (queue.length > 0) {
+      const currNode = queue.shift();
+      const allMoves = generateMoves([currNode.x, currNode.y]);
+
+      const nextMoves = allMoves.filter((move) => !hasVisited(move));
+
+      nextMoves.forEach((move) => {
+        const node = PositionNode(move);
+        currNode.addChild(node);
+        node.setParent(currNode);
+
+        queue.push(node);
+      });
+    }
+  };
+
+  const findShortestPath = (start, end) => {};
+
+  //  Check if knight is on board
+  const onBoard = (knightX, knightY, boardSize = 8) =>
+    knightX >= 1 &&
+    knightX <= boardSize &&
+    knightY >= 1 &&
+    knightY <= boardSize;
+
+  const hasVisited = (boardPosition) => {
+    return visited.some(
+      (move) => move[0] === boardPosition[0] && move[1] === boardPosition[1],
+    );
+  };
+
+  const generateMoves = (boardPosition) => {
+    const [startX, startY] = boardPosition;
+
     // Valid knight move coordinates for x and y
     const validX = [-2, -1, 1, 2, -2, -1, 1, 2];
     const validY = [-1, -2, -2, -1, 1, 2, 2, 1];
@@ -31,22 +83,26 @@ const Knight = () => {
     return validMoves;
   };
 
-  const traverse = (start, end) => {
+  /*
+  const findShortestPath = (start, end) => {
+    if (!onBoard(...start)) return 'Starting point is not on board';
+    if (!onBoard(...end)) return 'Destination point is not on board';
+
     const [startX, startY] = start;
     const [endX, endY] = end;
-
-    const validX = [-2, -1, 1, 2, -2, -1, 1, 2];
-    const validY = [-1, -2, -2, -1, 1, 2, 2, 1];
 
     const queue = [];
 
     queue.push(start);
+    visited.push(start);
 
     while (queue.length) {
-      const startPoint = queue.pop();
+      const startPoint = queue.shift();
+
+      //   CALL BACK PORTION
 
       if (startPoint[0] === endX && startPoint[1] === endY) {
-        return [startPoint[0], startPoint[1]];
+        return 'finished';
       }
 
       for (let i = 0; i < 8; i++) {
@@ -58,41 +114,26 @@ const Knight = () => {
           !hasVisited(nextMoveX, nextMoveY)
         ) {
           visited.push([nextMoveX, nextMoveY]);
+          queue.push([nextMoveX, nextMoveY]);
+
+          knightMoves[nextMoveX][nextMoveY] =
+            knightMoves[startPoint[0]][knightMoves[1]] + 1;
         }
       }
     }
-  };
-
-  /*
-
-  const traverse = (start, end, visitArr = []) => {
-    let [startX, startY] = start;
-    let [endX, endY] = end;
-    let visited = visitArr;
-
-    let travelCount = 0;
-
-    if (startX == endX && startY == endY) return 'done';
-    else {
-      const availableMoves = generateMoves(startX, startY);
-
-      console.log({ startX, startY, availableMoves });
-
-      availableMoves.forEach((move) => {
-        console.log(move);
-        // traverse(move, end);
-      });
-    }
+    return -1;
   };
 
   */
 
   return {
     generateMoves,
-    traverse,
+    findShortestPath,
   };
 };
 
-const jerry = Knight();
+// const jerry = Knight();
 
-jerry.traverse([1, 1], [2, 3]);
+// const result = jerry.findShortestPath([1, 1], [4, 4]);
+
+// console.log(result);
