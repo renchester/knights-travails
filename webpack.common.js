@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/controller.js',
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -19,8 +19,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /.(png|svg|jpg|jpeg|gif)$/i,
@@ -36,7 +36,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [['@babelpreset-env', { targets: 'defaults' }]],
+            presets: [['@babel/preset-env', { targets: 'defaults' }]],
           },
         },
       },
