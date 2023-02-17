@@ -1,7 +1,8 @@
 /**
  * Node factory function
  *
- * @param {[x, y]} coords - Takes an array with exactly two values representing the x and y position of the node
+ * @param {[x, y]} coords - Takes an array with exactly two values representing
+ * the x and y position of the node
  * @param {*} parentVal - Default: null; Links the node to a parent node if given
  *
  * @returns an object representing the node's position and links
@@ -24,7 +25,8 @@ const PositionNode = (coords, parentVal = null) => {
 /**
  * Knight factory function
  *
- * @param {[x, y]} startPoint - Takes an array with exactly two values representing the x and y starting position of Knight
+ * @param {[x, y]} startPoint - Takes an array with exactly two values
+ * representing the x and y starting position of Knight
  * @returns a Knight object with the findShortestPath method
  */
 
@@ -33,9 +35,8 @@ const Knight = (startPoint) => {
   let visited;
 
   // Helper function to check if the current node is the target destination
-  const doesPositionMatch = (node, target) => {
-    return node.position[0] === target[0] && node.position[1] === target[1];
-  };
+  const doesPositionMatch = (node, target) =>
+    node.position[0] === target[0] && node.position[1] === target[1];
 
   // Helper function to check if the position given is within the boundaries of the board
   const onBoard = (boardPosition, boardSize = 8) =>
@@ -46,11 +47,10 @@ const Knight = (startPoint) => {
 
   // Helper function to check if the position given has been visited. Compares position
   // an array 'visited' which is a property of the knight
-  const hasVisited = (boardPosition) => {
-    return visited.some(
+  const hasVisited = (boardPosition) =>
+    visited.some(
       (move) => move[0] === boardPosition[0] && move[1] === boardPosition[1],
     );
-  };
 
   /**
    * Generates all the possible moves a knight can take
@@ -66,8 +66,8 @@ const Knight = (startPoint) => {
     const validMoves = [];
 
     for (let i = 0; i <= validX.length - 1; i++) {
-      let moveX = boardPosition[0] + validX[i];
-      let moveY = boardPosition[1] + validY[i];
+      const moveX = boardPosition[0] + validX[i];
+      const moveY = boardPosition[1] + validY[i];
 
       if (onBoard([moveX, moveY])) validMoves.push([moveX, moveY]);
     }
@@ -127,11 +127,11 @@ const Knight = (startPoint) => {
   };
 
   // Init function to take the place of a constructor
-  const init = (startPoint) => {
-    if (!onBoard(startPoint)) return 'Invalid board position';
+  const init = (start) => {
+    if (!onBoard(start)) return 'Invalid board position';
 
-    rootNode = PositionNode(startPoint);
-    visited = [startPoint];
+    rootNode = PositionNode(start);
+    visited = [start];
   };
 
   init(startPoint);
@@ -141,7 +141,4 @@ const Knight = (startPoint) => {
   };
 };
 
-const knight1 = Knight([1, 1]);
-console.log(knight1.findShortestPath([2, 3]));
-console.log(knight1.findShortestPath([2, 8]));
-console.log(knight1.findShortestPath([1, 1]));
+export default Knight;
