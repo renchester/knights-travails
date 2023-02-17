@@ -1,12 +1,8 @@
-const PositionNode = (coords) => {
+const PositionNode = (coords, parentVal = null) => {
   const [x, y] = coords;
+  const position = coords;
   const children = [];
-
-  let parent = null;
-
-  const setParent = (parentValue) => {
-    parent = parentValue;
-  };
+  const parent = parentVal;
 
   const addChild = (child) => {
     children.push(child);
@@ -15,48 +11,73 @@ const PositionNode = (coords) => {
   return {
     x,
     y,
+    position,
     parent,
     children,
-    setParent,
     addChild,
   };
 };
 
 const Knight = (startPoint) => {
-  if (!onBoard(startPoint)) return 'Invalid board position';
-
-  const rootNode = PositionNode(startPoint);
-  const visited = [startPoint];
-
-  createPathTree();
+  let rootNode;
+  let visited;
 
   const createPathTree = () => {
     const queue = [rootNode];
 
     while (queue.length > 0) {
       const currNode = queue.shift();
-      const allMoves = generateMoves([currNode.x, currNode.y]);
+      const allMoves = generateMoves(currNode.position);
 
       const nextMoves = allMoves.filter((move) => !hasVisited(move));
 
       nextMoves.forEach((move) => {
-        const node = PositionNode(move);
+        const node = PositionNode(move, currNode);
         currNode.addChild(node);
-        node.setParent(currNode);
 
+        visited.push(node.position);
         queue.push(node);
       });
     }
   };
 
-  const findShortestPath = (start, end) => {};
+  const findShortestPath = (target) => {
+    const [targetX, targetY] = target;
+
+    if (rootNode.position[0] === targetX && rootNode.position[1] === targetY) {
+      return rootNode;
+    }
+
+    const queue = [...rootNode.children];
+
+    while (queue.length > 0) {
+      const currNode = queue.shift();
+
+      // Check if node is target
+      if (currNode.position[0] === targetX && currNode.position[1] === targetY)
+        return getPath(currNode);
+
+      queue.push(...currNode.children);
+    }
+  };
+
+  const getPath = (node) => {
+    const path = [node.position];
+
+    while (node.parent !== null) {
+      node = node.parent;
+      path.push(node.position);
+    }
+
+    return path.reverse();
+  };
 
   //  Check if knight is on board
-  const onBoard = (knightX, knightY, boardSize = 8) =>
-    knightX >= 1 &&
-    knightX <= boardSize &&
-    knightY >= 1 &&
-    knightY <= boardSize;
+  const onBoard = (boardPosition, boardSize = 8) =>
+    boardPosition[0] >= 1 &&
+    boardPosition[0] <= boardSize &&
+    boardPosition[1] >= 1 &&
+    boardPosition[1] <= boardSize;
 
   const hasVisited = (boardPosition) => {
     return visited.some(
@@ -77,60 +98,29 @@ const Knight = (startPoint) => {
       let moveX = startX + validX[i];
       let moveY = startY + validY[i];
 
-      if (onBoard(moveX, moveY)) validMoves.push([moveX, moveY]);
+      if (onBoard([moveX, moveY])) validMoves.push([moveX, moveY]);
     }
 
     return validMoves;
   };
 
-  /*
-  const findShortestPath = (start, end) => {
-    if (!onBoard(...start)) return 'Starting point is not on board';
-    if (!onBoard(...end)) return 'Destination point is not on board';
+  const init = (startPoint) => {
+    if (!onBoard(startPoint)) return 'Invalid board position';
 
-    const [startX, startY] = start;
-    const [endX, endY] = end;
+    rootNode = PositionNode(startPoint);
+    visited = [startPoint];
 
-    const queue = [];
-
-    queue.push(start);
-    visited.push(start);
-
-    while (queue.length) {
-      const startPoint = queue.shift();
-
-      //   CALL BACK PORTION
-
-      if (startPoint[0] === endX && startPoint[1] === endY) {
-        return 'finished';
-      }
-
-      for (let i = 0; i < 8; i++) {
-        const nextMoveX = startPoint[0] + validX[i];
-        const nextMoveY = startPoint[1] + validY[i];
-
-        if (
-          onBoard(nextMoveX, nextMoveY) &&
-          !hasVisited(nextMoveX, nextMoveY)
-        ) {
-          visited.push([nextMoveX, nextMoveY]);
-          queue.push([nextMoveX, nextMoveY]);
-
-          knightMoves[nextMoveX][nextMoveY] =
-            knightMoves[startPoint[0]][knightMoves[1]] + 1;
-        }
-      }
-    }
-    return -1;
+    createPathTree();
   };
 
-  */
+  init(startPoint);
 
   return {
-    generateMoves,
     findShortestPath,
   };
 };
+
+const knight1 = Knight([1, 1]);
 
 // const jerry = Knight();
 
