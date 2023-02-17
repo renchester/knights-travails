@@ -1,5 +1,4 @@
 const PositionNode = (coords, parentVal = null) => {
-  const [x, y] = coords;
   const position = coords;
   const children = [];
   const parent = parentVal;
@@ -9,8 +8,6 @@ const PositionNode = (coords, parentVal = null) => {
   };
 
   return {
-    x,
-    y,
     position,
     parent,
     children,
@@ -22,13 +19,16 @@ const Knight = (startPoint) => {
   let rootNode;
   let visited;
 
-  const createPathTree = () => {
+  const findShortestPath = (target) => {
     const queue = [rootNode];
 
     while (queue.length > 0) {
       const currNode = queue.shift();
-      const allMoves = generateMoves(currNode.position);
 
+      // Check if node is target
+      if (doesPositionMatch(currNode, target)) return getPath(currNode);
+
+      const allMoves = generateMoves(currNode.position);
       const nextMoves = allMoves.filter((move) => !hasVisited(move));
 
       nextMoves.forEach((move) => {
@@ -36,26 +36,11 @@ const Knight = (startPoint) => {
         currNode.addChild(node);
 
         visited.push(node.position);
+
+        if (doesPositionMatch(node, target)) return getPath(node);
+
         queue.push(node);
       });
-    }
-  };
-
-  const findShortestPath = (target) => {
-    const [targetX, targetY] = target;
-
-    if (rootNode.position[0] === targetX && rootNode.position[1] === targetY) {
-      return rootNode;
-    }
-
-    const queue = [...rootNode.children];
-
-    while (queue.length > 0) {
-      const currNode = queue.shift();
-
-      // Check if node is target
-      if (currNode.position[0] === targetX && currNode.position[1] === targetY)
-        return getPath(currNode);
 
       queue.push(...currNode.children);
     }
@@ -70,6 +55,10 @@ const Knight = (startPoint) => {
     }
 
     return path.reverse();
+  };
+
+  const doesPositionMatch = (node, target) => {
+    return node.position[0] === target[0] && node.position[1] === target[1];
   };
 
   //  Check if knight is on board
@@ -109,8 +98,6 @@ const Knight = (startPoint) => {
 
     rootNode = PositionNode(startPoint);
     visited = [startPoint];
-
-    createPathTree();
   };
 
   init(startPoint);
@@ -121,6 +108,9 @@ const Knight = (startPoint) => {
 };
 
 const knight1 = Knight([1, 1]);
+console.log(knight1.findShortestPath([2, 3]));
+console.log(knight1.findShortestPath([2, 8]));
+console.log(knight1.findShortestPath([1, 1]));
 
 // const jerry = Knight();
 
