@@ -1,3 +1,5 @@
+@use 'mixins';
+
 /* prettier-ignore */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -64,7 +66,7 @@ table {
   /* COLOR VARIABLES */
 
   --color-background: #f2f5ff;
-  --color-primary: #392061;
+  --color-primary: #0c6d74;
   --color-secondary: #8ddbe0;
   --color-accent: #9bc4bc;
   --color-dark-1: #4b5043;
@@ -99,8 +101,8 @@ table {
   --text-base-size: 1em;
 
   // type scale
-  --text-scale-ratio: 1.3;
-  --text-xs: calc((1em / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-scale-ratio: 1.2;
+  --text-xs: calc((1em / var(--text-scale-ratio)));
   --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
   --text-md: calc(var(--text-sm) * var(--text-scale-ratio));
   --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
@@ -128,5 +130,40 @@ header {
     font-size: var(--text-xxxl);
     font-family: var(--font-playfair);
     font-weight: 700;
+  }
+}
+
+.status-bar {
+  padding: 35px 0;
+  text-align: center;
+  font-size: var(--text-lg);
+  font-family: var(--font-raleway);
+  font-weight: 700;
+}
+
+.footer {
+  @extend %center-all-children;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  margin: 5px auto;
+  gap: 10px;
+  font-family: var(--font-open-sans);
+
+  & > *:visited,
+  & > *:link {
+    text-decoration: none;
+  }
+
+  &__link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--text-sm);
+  }
+
+  &__credit {
+    font-size: var(--text-xs);
   }
 }

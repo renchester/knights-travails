@@ -1,0 +1,20 @@
+@use 'base';
+
+.btn {
+  &__reset {
+    width: 150px;
+    margin: 30px auto 0px;
+    padding: 12px;
+    background-color: var(--color-primary);
+    border-radius: 10px;
+    color: var(--color-grey-light-1);
+    font-family: var(--font-raleway);
+    font-weight: 600;
+    font-size: var(--text-sm);
+
+    &:active {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+  }
+}
