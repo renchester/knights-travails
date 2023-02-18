@@ -52,35 +52,81 @@ table {
   vertical-align: baseline;
   font-family: inherit;
   font-style: inherit;
-  font-size: 100%;
+  font-size: inherit;
+  color: inherit;
   border: none;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-$color-nyanza: #d3ffe9;
-$color-tiff-blue: #8ddbe0;
-$color-cambridge-blue: #9bc4bc;
-$color-ebony: #4b5043;
-$color-black: #090909;
+:root {
+  /* COLOR VARIABLES */
 
-$color-grey-light-1: #f9f5f3; // Light background
-$color-grey-light-2: #f2efee; // Light lines
-$color-grey-light-3: #d3c7c3; // Light text (placeholder)
-$color-grey-dark-1: #615551; // Normal text
-$color-grey-dark-2: #918581; // Lighter text
+  --color-background: #f2f5ff;
+  --color-primary: #392061;
+  --color-secondary: #8ddbe0;
+  --color-accent: #9bc4bc;
+  --color-dark-1: #4b5043;
+  --color-dark-2: #090909;
+  --color-gradient-1: #f2f5ff;
+  --color-gradient-2: #f1d9fc;
 
-$gradient: linear-gradient(to bottom right, $color-nyanza, $color-tiff-blue);
+  --color-grey-light-1: #f9f5f3; // Light background
+  --color-grey-light-2: #f2efee; // Light lines
+  --color-grey-light-3: #d3c7c3; // Light text (placeholder)
+  --color-grey-dark-1: #423c3a; // Normal text
+  --color-grey-dark-2: #918581; // Lighter text
 
-$font-raleway: 'Raleway', Arial, Helvetica, sans-serif, monospace;
-$font-open-sans: 'Open Sans', Arial, Helvetica, sans-serif, monospace;
-$font-montserrat: 'Montserrat', 'Courier New', Arial, Helvetica, sans-serif,
-  monospace;
-$font-playfair: 'Playfair Display', Georgia, 'Times New Roman', Times, serif,
-  monospace;
+  --gradient: linear-gradient(
+    to bottom right,
+    --color-gradient-1,
+    --color-gradient-2
+  );
+
+  /* FONT FAMILY VARIABLES */
+
+  --font-raleway: 'Raleway', Arial, Helvetica, sans-serif, monospace;
+  --font-open-sans: 'Open Sans', Arial, Helvetica, sans-serif, monospace;
+  --font-montserrat: 'Montserrat', 'Courier New', Arial, Helvetica, sans-serif,
+    monospace;
+  --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', Times, serif,
+    monospace;
+
+  /* FONT SIZE VARIABLES */
+
+  // body font size
+  --text-base-size: 1em;
+
+  // type scale
+  --text-scale-ratio: 1.3;
+  --text-xs: calc((1em / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+  --text-md: calc(var(--text-sm) * var(--text-scale-ratio));
+  --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+  --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+  --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+  --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
+}
+
+:root .dark-mode {
+  --color-background: #303030;
+}
 
 body {
-  background: $gradient;
-  height: 100vh;
+  background-color: var(--color-background);
+  font-family: var(--font-open-sans);
+  color: var(--color-grey-dark-1);
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+
+  .logo {
+    font-size: var(--text-xxxl);
+    font-family: var(--font-playfair);
+    font-weight: 700;
+  }
 }
