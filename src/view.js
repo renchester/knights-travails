@@ -3,6 +3,7 @@ import knightIcon from './img/knight.png';
 const View = (() => {
   const squares = [...document.querySelectorAll('.board__square')];
   const btnReset = document.querySelector('.btn__reset');
+  const statusEl = document.querySelector('.status-bar');
 
   const generateKnightIconMarkup = () => ` 
         <img
@@ -41,6 +42,13 @@ const View = (() => {
     });
   };
 
+  const displayStatus = (status) => {
+    statusEl.textContent =
+      status === 'start'
+        ? 'Choose a starting point'
+        : 'Choose a destination point for the knight';
+  };
+
   const addHandlerSquares = (handler) => {
     squares.forEach((square) =>
       square.addEventListener('click', (e) => {
@@ -66,6 +74,7 @@ const View = (() => {
   return {
     renderPath,
     resetSquares,
+    displayStatus,
     addHandlerSquares,
     addHandlerReset,
   };
