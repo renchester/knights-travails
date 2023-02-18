@@ -67,7 +67,7 @@ table {
 
   --color-background: #f2f5ff;
   --color-primary: #0c6d74;
-  --color-secondary: #8ddbe0;
+  --color-secondary: #9dedf3;
   --color-accent: #9bc4bc;
   --color-dark-1: #4b5043;
   --color-dark-2: #090909;
@@ -82,8 +82,8 @@ table {
 
   --gradient: linear-gradient(
     to bottom right,
-    --color-gradient-1,
-    --color-gradient-2
+    var(--color-gradient-1),
+    var(--color-gradient-2)
   );
 
   /* FONT FAMILY VARIABLES */
@@ -102,6 +102,7 @@ table {
 
   // type scale
   --text-scale-ratio: 1.2;
+  --text-xxs: calc((1em / (var(--text-scale-ratio) * 1.35)));
   --text-xs: calc((1em / var(--text-scale-ratio)));
   --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
   --text-md: calc(var(--text-sm) * var(--text-scale-ratio));
@@ -116,27 +117,37 @@ table {
 }
 
 body {
-  background-color: var(--color-background);
+  // background-color: var(--color-background);
+  background: var(--gradient);
   font-family: var(--font-open-sans);
   color: var(--color-grey-dark-1);
+  height: 100vh;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
 header {
   display: flex;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 40px 20px 20px;
 
   .logo {
+    display: block;
+    position: relative;
     font-size: var(--text-xxxl);
     font-family: var(--font-playfair);
     font-weight: 700;
+    letter-spacing: 1.1px;
+    transform: skewX(-12deg);
   }
 }
 
 .status-bar {
   padding: 35px 0;
   text-align: center;
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   font-family: var(--font-raleway);
   font-weight: 700;
 }
@@ -160,10 +171,11 @@ header {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
   }
 
   &__credit {
     font-size: var(--text-xs);
+    font-style: italic;
   }
 }

@@ -1,7 +1,13 @@
 @use 'base';
 
 .btn {
+  cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
   &__reset {
+    position: relative;
+    z-index: 2;
     width: 150px;
     margin: 30px auto 0px;
     padding: 12px;
@@ -15,6 +21,40 @@
     &:active {
       outline: 3px solid var(--color-primary);
       outline-offset: 2px;
+    }
+  }
+
+  &__info {
+    position: absolute;
+    top: 75%;
+    margin-left: 5px;
+    transform: scale(0.8) skewX(12deg);
+    box-shadow: none;
+
+    & .info-details {
+      display: none;
+    }
+
+    &:hover .info-details,
+    &:active .info-details,
+    &:focus .info-details {
+      display: block;
+      position: absolute;
+      top: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: 400px;
+      background-color: var(--color-secondary);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      cursor: auto;
+      text-align: center;
+      white-space: normal;
+      text-align: left;
+      font-family: var(--font-open-sans);
+      font-size: var(--text-xxs);
+      line-height: normal;
+      z-index: 100;
     }
   }
 }
