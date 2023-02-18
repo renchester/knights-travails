@@ -10,11 +10,34 @@
   --color-chess-dark: #3e7981;
   --color-chessboard: #104b48;
 
-  .knight-logo {
+  .knight__icon {
     @extend %absolute-element__center-self;
     width: 40px;
     height: auto;
     z-index: 1;
+
+    &.path-visited {
+      opacity: 0.5;
+    }
+  }
+
+  .path-number__icon {
+    @extend %center-all-children;
+
+    position: absolute;
+    right: 0;
+    background-color: #f805bb;
+    width: calc(var(--square-size) * 0.45);
+    aspect-ratio: 1/1;
+    border-radius: 40px;
+    z-index: 2;
+
+    // width: var(--square-size);
+
+    color: var(--color-grey-light-1);
+    font-size: var(--text-sm);
+    font-family: var(--font-montserrat);
+    font-weight: 1000;
   }
 
   &__container {
