@@ -33,8 +33,10 @@ const controlResetSquares = () => {
 };
 
 const init = () => {
+  View.setPageTheme();
   View.addHandlerSquares(controlChessSquares);
   View.addHandlerReset(controlResetSquares);
+  View.addHandlerToggleTheme();
 };
 
 init();
