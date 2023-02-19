@@ -62,7 +62,7 @@ table {
   box-sizing: border-box;
 }
 
-:root {
+body {
   /* COLOR VARIABLES */
 
   --color-background: #f2f5ff;
@@ -73,6 +73,9 @@ table {
   --color-dark-2: #090909;
   --color-gradient-1: #f2f5ff;
   --color-gradient-2: #f1d9fc;
+
+  --color-text: #423c3a;
+  --color-white: #f2f5ff;
 
   --color-grey-light-1: #f9f5f3; // Light background
   --color-grey-light-2: #f2efee; // Light lines
@@ -112,15 +115,18 @@ table {
   --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
 }
 
-:root .dark-mode {
-  --color-background: #303030;
+body.dark-mode {
+  --color-background: #3b3b3b;
+  --color-text: white;
+
+  --color-primary: #00828b;
 }
 
 body {
   // background-color: var(--color-background);
-  background: var(--gradient);
+  background: var(--color-background);
   font-family: var(--font-open-sans);
-  color: var(--color-grey-dark-1);
+  color: var(--color-text);
   height: 100vh;
 }
 
@@ -129,6 +135,7 @@ body {
 }
 
 header {
+  position: relative;
   display: flex;
   justify-content: center;
   padding: 40px 20px 20px;
