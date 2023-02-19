@@ -4,6 +4,7 @@ const View = (() => {
   const squares = [...document.querySelectorAll('.board__square')];
   const btnReset = document.querySelector('.btn__reset');
   const statusEl = document.querySelector('.status-bar');
+  const themeSwitcher = document.querySelector('#themeSwitch');
 
   const generateKnightIconMarkup = () => ` 
         <img
@@ -71,12 +72,38 @@ const View = (() => {
     btnReset.addEventListener('click', handler);
   };
 
+  const addHandlerToggleTheme = () => {
+    themeSwitcher.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('preferredTheme', 'dark');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('preferredTheme', 'light');
+      }
+    });
+  };
+
+  const setPageTheme = () => {
+    const preferredTheme = localStorage.getItem('preferredTheme');
+
+    if (!preferredTheme || preferredTheme === 'light') {
+      document.body.classList.remove('dark-mode');
+      themeSwitcher.checked = false;
+    } else if (preferredTheme === 'dark') {
+      document.body.classList.add('dark-mode');
+      themeSwitcher.checked = true;
+    }
+  };
+
   return {
     renderPath,
     resetSquares,
     displayStatus,
     addHandlerSquares,
     addHandlerReset,
+    addHandlerToggleTheme,
+    setPageTheme,
   };
 })();
 
