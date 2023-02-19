@@ -94,6 +94,7 @@ table {
     monospace;
   --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', Times, serif,
     monospace;
+  --font-gloock: 'Gloock', Georgia, 'Times New Roman', Times, serif, monospace;
 
   /* FONT SIZE VARIABLES */
 
@@ -137,10 +138,9 @@ header {
     display: block;
     position: relative;
     font-size: var(--text-xxxl);
-    font-family: var(--font-playfair);
-    font-weight: 700;
+    font-family: var(--font-montserrat);
+    font-weight: 600;
     letter-spacing: 1.1px;
-    transform: skewX(-12deg);
   }
 }
 
